@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @imakoko.name %>
+	  <strong>緯度:</strong>
+	<%= @imakoko.ido %>
+	  <strong>経度:</strong>
+	<%= @imakoko.keido %>
+	
+</p>
+
+<h2>訪問した場所</h2>
+    <div id="map" style='width: 100%;height:200px;'></div>
+
+
+<script type="text/javascript">
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {draggable: false,panControl: false,streetViewControl: false}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+	  handler.getMap().setZoom(18);
+    });
+</script>
+
+<%= link_to 'Edit', edit_imakoko_path(@imakoko) %> |
+<%= link_to 'Back', imakokos_path %>

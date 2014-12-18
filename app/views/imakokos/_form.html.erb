@@ -1,0 +1,68 @@
+<script type="text/javascript">
+  if (navigator.geolocation) {
+
+    // 現在の位置情報を取得
+    navigator.geolocation.getCurrentPosition(
+
+      // （1）位置情報の取得に成功した場合
+      function (pos) {
+        var ido = pos.coords.latitude;
+        var keido = pos.coords.longitude;
+
+        document.getElementById("imakoko_ido").value = ido;
+        document.getElementById("imakoko_keido").value = keido;
+        
+        },
+
+      // （2）位置情報の取得に失敗した場合
+      function (error) {
+        var message = "";
+
+        switch (error.code) {
+
+          // 位置情報が取得できない場合
+          case error.POSITION_UNAVAILABLE:
+            message = "a. 位置情報の取得ができませんでした。";
+            break;
+
+          // Geolocationの使用が許可されない場合
+          case error.PERMISSION_DENIED:
+            message = "b. 位置情報取得の使用許可がされませんでした。";
+            break;
+
+          // タイムアウトした場合
+          case error.PERMISSION_DENIED_TIMEOUT:
+            message = "c. 位置情報取得中にタイムアウトしました。";
+            break;
+        }
+        window.alert(message);
+      }
+    );
+  } else {
+    window.alert("d.本ブラウザではGeolocationが使えません");
+  }
+</script>
+
+<%= form_for(@imakoko) do |f| %>
+  <% if @imakoko.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@imakoko.errors.count, "error") %> prohibited this imakoko from being saved:</h2>
+
+      <ul>
+      <% @imakoko.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+<%= f.hidden_field :ido, :value => :ido  %>
+<%= f.hidden_field :keido, :value => :keido  %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

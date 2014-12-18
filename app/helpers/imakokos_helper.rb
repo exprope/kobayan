@@ -1,0 +1,2 @@
+module ImakokosHelper
+end

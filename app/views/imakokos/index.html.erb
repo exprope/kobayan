@@ -1,0 +1,25 @@
+<h1>Listing imakokos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @imakokos.each do |imakoko| %>
+      <tr>
+        <td><%= imakoko.name %></td>
+        <td><%= link_to 'Show', imakoko %></td>
+        <td><%= link_to 'Edit', edit_imakoko_path(imakoko) %></td>
+        <td><%= link_to 'Destroy', imakoko, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Imakoko', new_imakoko_path %>
